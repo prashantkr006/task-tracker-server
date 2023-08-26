@@ -32,7 +32,7 @@ cd task-tracker-backend
   <li><strong>Configuration:</strong></li>
 </ol>
 
-<p>Create a <code>config.js</code> file in the root directory of the project. Add the following content to it:</p>
+<p>Create a <code>.env</code> file in the root directory of the project. Add the following content to it:</p>
 
 <pre><code>module.exports = {
     mongoURI: '<your-mongodb-uri>',

@@ -3,22 +3,24 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); // Add this line
 const config = require('./config'); // Import the config file
 const authRoutes = require('./routes/authRoutes'); // Add this line
+require("dotenv").config();
 const cors = require('cors');
 
 const app = express();
 
 // Set up CORS with dynamic origin
-app.use(cors({
-    origin: (origin, callback) => {
-        // Allow requests from localhost:3000 (your React app)
-        if (origin === 'http://localhost:3000') {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true, // Allow cookies to be sent
-}));
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         // Allow requests from localhost:3000 (your React app)
+//         if (origin === 'http://localhost:3000') {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     credentials: true, // Allow cookies to be sent
+// }));
+app.use(cors())
 
 // Middleware
 app.use(bodyParser.json()); // Add this line
@@ -27,7 +29,7 @@ app.use(bodyParser.json()); // Add this line
 app.use('/auth', authRoutes); // Add this line
 
 // Connect to the MongoDB database using the configuration
-mongoose.connect(config.mongoURI, {
+mongoose.connect(process.env.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
