@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); // Add this line
-const config = require('./config'); // Import the config file
 const authRoutes = require('./routes/authRoutes'); // Add this line
 require("dotenv").config();
 const cors = require('cors');
