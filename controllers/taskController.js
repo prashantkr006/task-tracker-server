@@ -1,4 +1,4 @@
-const Task = require('../models/task');
+const Task = require('../models/Task');
 const { validateRequiredField } = require('../utils/validationUtils');
 const { sendErrorResponse } = require('../utils/errorUtils'); // Import the sendErrorResponse function
 const logger = require('../utils/logger'); // Import the logger
