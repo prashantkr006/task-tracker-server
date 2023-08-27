@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser'); // Add this line
-const config = require('./config'); // Import the config file
-const authRoutes = require('./routes/authRoutes'); // Add this line
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 require("dotenv").config();
 const cors = require('cors');
 
@@ -23,10 +24,14 @@ const app = express();
 app.use(cors())
 
 // Middleware
-app.use(bodyParser.json()); // Add this line
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-// Routes
-app.use('/auth', authRoutes); // Add this line
+// auth Routes
+app.use('/auth', authRoutes);
+
+// tasks routes
+app.use('/tasks', taskRoutes);
 
 // Connect to the MongoDB database using the configuration
 mongoose.connect(process.env.mongoURI, {

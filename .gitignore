@@ -24,3 +24,4 @@ yarn-error.log*
 
 #important files
 .env
+/logs/
