@@ -164,3 +164,51 @@ CastError: Cast to ObjectId failed for value "{ taskID: '9' }" (type Object) at 
     at model.Query.exec (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\query.js:4419:28)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async deleteTask (D:\work\web dev\task-tracker\server\controllers\taskController.js:178:33)
+[2023-08-28T05:59:25.987Z] ERROR: Error fetching tasks
+ReferenceError: keyword is not defined
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2023-08-28T05:59:26.248Z] ERROR: Error fetching tasks
+ReferenceError: keyword is not defined
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:68:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2023-08-28T06:20:34.772Z] ERROR: Error creating task
+ValidationError: Task validation failed: _id: Cast to ObjectId failed for value "0.10520951231504583" (type string) at path "_id" because of "BSONError"
+    at Document.invalidate (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\document.js:3162:32)
+    at model.$set (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\document.js:1453:12)
+    at model.set [as _id] (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\helpers\document\compile.js:205:19)
+    at model.idSetter (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\helpers\schema\idGetter.js:44:12)
+    at VirtualType.applySetters (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\virtualtype.js:166:16)
+    at model.$set (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\document.js:1271:12)
+    at model.$set (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\document.js:1113:16)
+    at model.Document (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\document.js:164:12)
+    at model.Model (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\model.js:123:12)
+    at new model (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\model.js:4691:15)
+[2023-08-28T08:34:59.106Z] ERROR: Error fetching tasks
+TypeError: Invalid sort value: { priority: [object Object] }
+    at push (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1315:19)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1272:7)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\query.js:2946:26)
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:97:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2023-08-28T08:35:17.958Z] ERROR: Error fetching tasks
+TypeError: Invalid sort value: { priority: [object Object] }
+    at push (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1315:19)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1272:7)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\query.js:2946:26)
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:97:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2023-08-28T08:49:47.517Z] ERROR: Error fetching tasks
+TypeError: Invalid sort value: { priority: [object Object] }
+    at push (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1315:19)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1272:7)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\query.js:2946:26)
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:97:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2023-08-28T08:51:49.828Z] ERROR: Error fetching tasks
+TypeError: Invalid sort value: { priority: [object Object] }
+    at push (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1315:19)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mquery\lib\mquery.js:1272:7)
+    at Query.sort (D:\work\web dev\task-tracker\server\node_modules\mongoose\lib\query.js:2946:26)
+    at getTasks (D:\work\web dev\task-tracker\server\controllers\taskController.js:98:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

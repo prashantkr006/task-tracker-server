@@ -10,18 +10,17 @@ const cors = require('cors');
 const app = express();
 
 // Set up CORS with dynamic origin
-// app.use(cors({
-//     origin: (origin, callback) => {
-//         // Allow requests from localhost:3000 (your React app)
-//         if (origin === 'http://localhost:3000') {
-//             callback(null, true);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     credentials: true, // Allow cookies to be sent
-// }));
-app.use(cors())
+app.use(cors({
+    origin: (origin, callback) => {
+        if (origin === 'https://task-tracks.netlify.app') {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
+
 
 // Middleware
 app.use(bodyParser.json());

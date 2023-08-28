@@ -1,4 +1,4 @@
-const Task = require('../models/task');
+const Task = require('../models/Task');
 const { validateRequiredField } = require('../utils/validationUtils');
 const { sendErrorResponse } = require('../utils/errorUtils'); // Import the sendErrorResponse function
 const logger = require('../utils/logger'); // Import the logger
@@ -21,11 +21,9 @@ const getNextTaskID = async () => {
     return sequence.value;
 };
 
-
 const taskController = {
     createTask: async (req, res) => {
         try {
-
             const nextTaskID = await getNextTaskID();
             req.body.taskID = nextTaskID;
 
@@ -38,7 +36,12 @@ const taskController = {
             const newTask = new Task(req.body);
             // Create the task
             await newTask.save();
-            res.status(201).json(newTask);
+
+            res.status(201).json({
+                success: true,
+                message: 'Task created successfully',
+                task: newTask,
+            });
         } catch (error) {
             logger.error('Error creating task', error);
             sendErrorResponse(res, 500, 'Error creating task', error.message);
@@ -49,41 +52,52 @@ const taskController = {
         try {
             const page = parseInt(req.query.page) || 1;
             const pageSize = parseInt(req.query.pageSize) || 10;
-            const sortBy = req.query.sortBy || 'dueDate';
-            const sortOrder = req.query.sortOrder || 'asc';
+            const sortBy = req.query.sortBy;
+            const sortOrder = req.query.sortOrder;
+            const statusFilter = req.query.status;
             const priorityFilter = req.query.priority;
+            const keyword = req.query.keyword; // Get the keyword query parameter
 
             const totalCount = await Task.countDocuments();
             const totalPages = Math.ceil(totalCount / pageSize);
 
             let query = Task.find();
 
-            // Add priority filter if provided
+            if (statusFilter) {
+                query = query.where('status', statusFilter);
+            }
+
             if (priorityFilter) {
                 query = query.where('priority', priorityFilter);
             }
 
+            if (keyword) {
+                query = query.where({
+                    $or: [
+                        { title: { $regex: keyword, $options: 'i' } },
+                        { description: { $regex: keyword, $options: 'i' } },
+                    ],
+                });
+            }
 
-            // Sorting logic
             const sortOptions = {};
             if (sortBy === 'dueDate' || sortBy === 'priority') {
                 sortOptions[sortBy] = sortOrder === 'asc' ? 1 : -1;
                 if (sortBy === 'priority') {
                     // Map priority values to numerical values for sorting
-                    sortOptions['priority'] = {
+                    const priorityMapping = {
                         low: 1,
                         medium: 2,
-                        high: 3
+                        high: 3,
                     };
+                    sortOptions['priority'] = priorityMapping[sortOrder];
                 }
             }
 
             query = query.sort(sortOptions);
 
             // Pagination logic
-            const tasks = await query
-                .skip((page - 1) * pageSize)
-                .limit(pageSize);
+            const tasks = await query.skip((page - 1) * pageSize).limit(pageSize);
 
             res.json({
                 tasks,
@@ -174,19 +188,19 @@ const taskController = {
     deleteTask: async (req, res) => {
         try {
             const taskId = req.params.taskId;
-            
+
             const deletedTask = await Task.findOneAndDelete({ taskID: taskId });
-    
+
             if (!deletedTask) {
                 return res.status(404).json({ message: 'Task not found' });
             }
-    
+
             res.json({ message: 'Task deleted successfully' });
         } catch (error) {
             logger.error('Error deleting task', error);
             sendErrorResponse(res, 500, 'Error deleting task', error.message);
         }
-    }    
+    }
 };
 
 module.exports = taskController;

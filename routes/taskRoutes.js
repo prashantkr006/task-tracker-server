@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(authenticateUser);
 
 // Create a task
-router.post('/', taskController.createTask);
+router.post('/create', taskController.createTask);
 
 // Get all tasks
 router.get('/', taskController.getTasks);
@@ -17,9 +17,9 @@ router.get('/', taskController.getTasks);
 router.get('/:taskId', taskController.getTaskById);
 
 // Update a task
-router.put('/:taskId', taskController.updateTask);
+router.put('/update/:taskId', taskController.updateTask);
 
 // Delete a task
-router.delete('/:taskId', taskController.deleteTask);
+router.delete('/delete/:taskId', taskController.deleteTask);
 
 module.exports = router;

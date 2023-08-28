@@ -38,7 +38,8 @@ async function registerUser(req, res) {
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error while registering user:', error);
+    res.status(500).json({ message: 'Server error' }); // Return a generic error message
   }
 }
 
