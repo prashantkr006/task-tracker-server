@@ -63,7 +63,7 @@ async function loginUser(req, res) {
     const token = jwtUtils.createToken({ userId: user._id });
 
     // Set the token as a cookie
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour
+    res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: task-tracks.netlify.app }); // 1 hour
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
