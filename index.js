@@ -11,17 +11,14 @@ const cors = require('cors');
 const app = express();
 
 //setup CORS origin
-const allowedOrigins = ['http://localhost:3000', 'https://task-tracks.netlify.app'];
 const corsOptions = {
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: ['http://localhost:3000', 'https://task-tracks.netlify.app'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies to be sent
 };
+
 app.use(cors(corsOptions));
+
 
 // Middleware
 app.use(bodyParser.json());
