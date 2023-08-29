@@ -26,6 +26,8 @@ const taskController = {
         try {
             const nextTaskID = await getNextTaskID();
             req.body.taskID = nextTaskID;
+            // Include the user field in the request body
+            req.body.user = req.user.userId;
 
             // Validate required fields
             validateRequiredField(req.body, 'title');
@@ -61,7 +63,7 @@ const taskController = {
             const totalCount = await Task.countDocuments();
             const totalPages = Math.ceil(totalCount / pageSize);
 
-            let query = Task.find();
+            let query = Task.find({ user: req.user.userId });
 
             if (statusFilter) {
                 query = query.where('status', statusFilter);
@@ -116,7 +118,7 @@ const taskController = {
         try {
             const taskId = req.params.taskId;
 
-            const task = await Task.findOne({ taskID: taskId });
+            const task = await Task.findOne({ taskID: taskId, user: req.user.userID });
 
             if (!task) {
                 return sendErrorResponse(res, 404, 'Task not found');
@@ -134,7 +136,7 @@ const taskController = {
             const taskId = req.params.taskId;
             const { status, dueDate, completed, subtasks } = req.body;
 
-            const task = await Task.findOne({ taskID: taskId });
+            const task = await Task.findOne({ taskID: taskId, user: req.user.userId });
 
             if (!task) {
                 return res.status(404).json({ message: 'Task not found' });
@@ -188,8 +190,7 @@ const taskController = {
     deleteTask: async (req, res) => {
         try {
             const taskId = req.params.taskId;
-
-            const deletedTask = await Task.findOneAndDelete({ taskID: taskId });
+            const deletedTask = await Task.findOneAndDelete({ taskID: taskId, user: req.user.userId });
 
             if (!deletedTask) {
                 return res.status(404).json({ message: 'Task not found' });

@@ -4,23 +4,24 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const signoutRoute = require('./routes/signoutRoute')
 require("dotenv").config();
 const cors = require('cors');
 
 const app = express();
 
-// Set up CORS with dynamic origin
-app.use(cors({
+//setup CORS origin
+const allowedOrigins = ['http://localhost:3000', 'https://task-tracks.netlify.app'];
+const corsOptions = {
     origin: (origin, callback) => {
-        if (origin === 'https://task-tracks.netlify.app') {
+        if (allowedOrigins.includes(origin) || !origin) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true,
-}));
-
+};
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(bodyParser.json());
@@ -31,6 +32,9 @@ app.use('/auth', authRoutes);
 
 // tasks routes
 app.use('/tasks', taskRoutes);
+
+// signout routes
+app.use('/signout', signoutRoute);
 
 // Connect to the MongoDB database using the configuration
 mongoose.connect(process.env.mongoURI, {

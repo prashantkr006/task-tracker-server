@@ -7,6 +7,7 @@ const subtaskSchema = new mongoose.Schema({
 
 const taskSchema = new mongoose.Schema({
     taskID: { type: Number, unique: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     priority: { type: String, enum: ['low', 'medium', 'high'], required: true },
